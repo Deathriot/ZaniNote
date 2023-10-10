@@ -42,6 +42,7 @@ public class InMemoryNotesManager implements NotesManager{
         }
 
         note.setText(text);
+        note.setSymbCount(text.length());
         note.setChangeTime(LocalDateTime.now()); // Обновляем дату редактирования
     }
 
