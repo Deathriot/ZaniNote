@@ -2,7 +2,7 @@ package model;
 
 // Обычная задача - ничего интересного
 public class SimpleTask extends Task{
-    public SimpleTask(String title, String text) {
-        super(title, text);
+    public SimpleTask(String title) {
+        super(title);
     }
 }

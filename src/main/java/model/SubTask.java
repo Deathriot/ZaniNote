@@ -3,8 +3,8 @@ package model;
 public class SubTask extends Task{
     // Айди своей суперЗадачи
     private int masterId;
-    public SubTask(String title, String text) {
-        super(title, text);
+    public SubTask(String title) {
+        super(title);
     }
 
     public int getMasterId() {

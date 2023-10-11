@@ -2,6 +2,7 @@ package model;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Note {
@@ -16,18 +17,21 @@ public class Note {
     // Количество символов
     private int symbCount;
 
-    public Note(String title, String text) {
-        this.title = title;
-        this.text = text;
-        this.changeTime = LocalDateTime.now(); // Очевидно что сейчас
-        this.symbCount = text.length(); // Не думаю что нужно учитывать заголовок
-    }
+    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy - hh:mm");
 
     public Note(){
         this.title = "Заголовок";
         this.text = "Текст";
         this.changeTime = LocalDateTime.now();
         this.symbCount = text.length();
+    }
+
+    public Note(int id, String title, String text, LocalDateTime changeTime, int symbCount) {
+        this.id = id;
+        this.title = title;
+        this.text = text;
+        this.changeTime = changeTime;
+        this.symbCount = symbCount;
     }
 
     public void setTitle(String title) {
@@ -94,9 +98,9 @@ public class Note {
     @Override
     public String toString() {
         return "Заметка номер " + id + "\n" +
-                ", Заголовок: " + title + "\n" +
-                ", Текст: " + text + "\n" +
-                ", Дата Изменения: " + changeTime + "\n" +
-                ", Количество символов: " + symbCount + "\n";
+                "Заголовок: " + title + "\n" +
+                "Текст: " + text + "\n" +
+                "Дата Изменения: " + changeTime.format(formatter) + "\n" +
+                "Количество символов: " + symbCount + "\n";
     }
 }

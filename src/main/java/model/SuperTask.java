@@ -8,8 +8,8 @@ public class SuperTask extends Task{
     private List<Integer> subId;
     // И сами саб задачи, будем хранить и то и другое, чтоб было проще искать
     private List<SubTask> subs;
-    public SuperTask(String title, String text) {
-        super(title, text);
+    public SuperTask(String title) {
+        super(title);
     }
 
     // Добавить задачу в список

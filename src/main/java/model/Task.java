@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 // Абстрактная задача - основа для всех задач
@@ -9,16 +10,15 @@ public abstract class Task {
     private int id;
     // Заголовок
     private String title;
-    // Описание задачи
-    private String text;
     // Сделано чи не
     private boolean done;
     // Дата создания, пусть будет
     private LocalDateTime creationTime;
 
-    public Task(String title, String text) {
+    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy - hh:mm");
+
+    public Task(String title) {
         this.title = title;
-        this.text = text;
         done = false; // Нахер нам писать уже сделанную задачу?
         creationTime = LocalDateTime.now(); // Ну вот создали прям щас
     }
@@ -37,14 +37,6 @@ public abstract class Task {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public boolean isDone() {
@@ -77,7 +69,6 @@ public abstract class Task {
     public int hashCode() {
         int result = id;
         result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (text != null ? text.hashCode() : 0);
         result = 31 * result + (done ? 1 : 0);
         result = 31 * result + (creationTime != null ? creationTime.hashCode() : 0);
         return result;
@@ -87,9 +78,8 @@ public abstract class Task {
     @Override
     public String toString() {
         return "Задача номер " + id + "\n" +
-                ", Заголовок: " + title + "\n" +
-                ", Текст: " + text + "\n" +
-                ", Сделана ли: " + done + "\n" +
-                ", Дата создания: " + creationTime + "\n";
+                "Заголовок: " + title + "\n" +
+                "Сделана ли: " + done + "\n" +
+                "Дата создания: " + creationTime.format(formatter) + "\n";
     }
 }

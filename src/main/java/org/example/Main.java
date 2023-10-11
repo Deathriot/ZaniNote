@@ -1,7 +1,9 @@
 package org.example;
 
+import model.*;
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Task task = new SimpleTask("hui");
+        System.out.println(task);
     }
 }

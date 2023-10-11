@@ -9,9 +9,8 @@ import java.util.List;
 // По-другому очевидно никак
 public interface TaskManager {
     void createEmptyTask(); // Создать задачу с полями по дефолту
-    void createTask(String title, String text); // Создать задачу уже как хочешь
+    void createTask(String title); // Создать задачу уже как хочешь
     void updateTitle(int taskId, String title); // Редактируем заголовок
-    void updateText(int taskId, String text); // Редактируем текст задачи
     void addTask(int taskId); // Добавляем задачу к суперу или другой простой задачи
     void updateDone(int taskId); // Меняем статус задачи на противоположный
     void delete(int taskId); // Удаляем задачу

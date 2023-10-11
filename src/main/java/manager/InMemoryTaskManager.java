@@ -16,23 +16,19 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createEmptyTask() {
-        SimpleTask task = new SimpleTask("Заголовок", "Описание");
+        SimpleTask task = new SimpleTask("Заголовок");
         task.setId(nextId++);
 
         simpleTasks.put(task.getId(), task);
     }
 
     @Override
-    public void createTask(String title, String text) {
+    public void createTask(String title) {
         if (title == null) {
             title = "";
         }
 
-        if (text == null) {
-            text = "";
-        }
-
-        SimpleTask task = new SimpleTask(title, text);
+        SimpleTask task = new SimpleTask(title);
         task.setId(nextId++);
 
         simpleTasks.put(task.getId(), task);
@@ -49,21 +45,11 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateText(int taskId, String text) {
-        if (text == null) {
-            text = "";
-        }
-
-        Task task = findTask(taskId);
-        task.setText(text);
-    }
-
-    @Override
     public void addTask(int taskId) {
         Task task = findTask(taskId);
 
         // Создаем новый саб
-        SubTask newSub = new SubTask("Новый саб", "Вставьте описание");
+        SubTask newSub = new SubTask("Новый саб");
         newSub.setId(nextId++);
 
         if (task instanceof SuperTask) {
@@ -88,11 +74,11 @@ public class InMemoryTaskManager implements TaskManager {
             simpleTasks.remove(taskId); // Удаляем искомую задачу из списка обычных задач
 
             // Создаем суперЗадачу новую, все по тз (дебильному)
-            SuperTask newSuper = new SuperTask("СуперЗадача", "Вставьте описание");
+            SuperTask newSuper = new SuperTask("СуперЗадача");
             newSuper.setId(nextId++);
 
             // А вот и транс переход нашей задачи - превращаем ее в саб, все копируя
-            SubTask transTask = new SubTask(task.getTitle(), task.getText());
+            SubTask transTask = new SubTask(task.getTitle());
             transTask.setId(task.getId());
             transTask.setDone(task.isDone());
             transTask.setCreationTime(task.getCreationTime());
@@ -155,7 +141,7 @@ public class InMemoryTaskManager implements TaskManager {
 
             // Если у супера нет сабов - превращаем его обратно в обычную задачу, все по тз
             if (superTask.getSubs().isEmpty()) {
-                SimpleTask transTask = new SimpleTask(superTask.getTitle(), superTask.getText());
+                SimpleTask transTask = new SimpleTask(superTask.getTitle());
                 transTask.setId(superTask.getId());
                 transTask.setDone(superTask.isDone());
                 transTask.setCreationTime(superTask.getCreationTime());
@@ -211,7 +197,7 @@ public class InMemoryTaskManager implements TaskManager {
         Set<Task> foundTask = new HashSet<>(); // Используем сет чтобы не париться с повторением задач
 
         for (Task task : tasks) {
-            if (task.getTitle().contains(charSequence) || task.getText().contains(charSequence)) {
+            if (task.getTitle().contains(charSequence)) {
 
                 // если по поиску найден саб - возвращаем его суперзадачу, так круче
                 if (task instanceof SubTask) {
