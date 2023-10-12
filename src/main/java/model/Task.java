@@ -14,13 +14,22 @@ public abstract class Task {
     private boolean done;
     // Дата создания, пусть будет
     private LocalDateTime creationTime;
+    //Тип задачи, нужен чтоб проще было определять собсна тип задачи, а также необходим для сериализации
+    private final TaskType type;
 
     public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy - hh:mm");
 
-    public Task(String title) {
+    public Task(String title, TaskType type) {
+        this.type = type;
         this.title = title;
         done = false; // Нахер нам писать уже сделанную задачу?
         creationTime = LocalDateTime.now(); // Ну вот создали прям щас
+    }
+
+    public Task(TaskType type){
+        this.type = type;
+        this.done = false;
+        this.creationTime = LocalDateTime.now();
     }
 
     public int getId() {
@@ -55,6 +64,10 @@ public abstract class Task {
         this.creationTime = creationTime;
     }
 
+    public TaskType getType() {
+        return type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,9 +90,23 @@ public abstract class Task {
     // Чтоб красиво выглядело, в теории так можно преобразовывать в Json
     @Override
     public String toString() {
-        return "Задача номер " + id + "\n" +
+        return "\n" + getTaskName(type) + " " + + id + "\n" +
                 "Заголовок: " + title + "\n" +
                 "Сделана ли: " + done + "\n" +
                 "Дата создания: " + creationTime.format(formatter) + "\n";
+    }
+
+    private String getTaskName(TaskType type){
+        switch (type){
+            case SIMPLE:
+                return "Обычная задача";
+            case SUB:
+                return "Саб задача";
+            case SUPER:
+                return "Супер задача";
+        }
+
+        throw new IllegalArgumentException("Это ваще как эту ошибку можно получить, поехал совсем? " +
+                "Такой задачи физически не может быть");
     }
 }

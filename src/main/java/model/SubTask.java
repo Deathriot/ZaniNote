@@ -4,7 +4,11 @@ public class SubTask extends Task{
     // Айди своей суперЗадачи
     private int masterId;
     public SubTask(String title) {
-        super(title);
+        super(title, TaskType.SUB);
+    }
+
+    public SubTask(){
+        super(TaskType.SUB);
     }
 
     public int getMasterId() {
@@ -17,6 +21,6 @@ public class SubTask extends Task{
 
     @Override
     public String toString(){
-        return super.toString() + "\n" + "id суперЗадачи: " + masterId + "\n";
+        return super.toString() + "id суперЗадачи: " + masterId + "\n";
     }
 }
